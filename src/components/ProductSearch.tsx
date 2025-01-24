@@ -12,12 +12,17 @@ function ProductSearch() {
     const [error, setError] = useState<string | null>(null);
 
     const handleSearch = async () => {
-        const res = await fetch(`@/services/getProduct?barcode=${barcode}`);
+        const res = await fetch(`/api/getProduct?barcode=${barcode}`);
+
         if (res.ok) {
             const data: Product = await res.json();
             setProduct(data);
+            console.log(data);
             setError(null);
         } else {
+            const data: Product = await res.json();
+
+            console.log(data);
             setError('Product not found');
             setProduct(null);
         }
