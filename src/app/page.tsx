@@ -2,12 +2,23 @@
 import MysqlProduct from '@/components/MysqlProduct';
 import ProductSearch from '@/components/ProductSearch';
 
+import ShopingCart from './shoppingcart';
+
 export default function Home() {
+    const handleClick = () => {
+        alert('버튼이 클릭되었습니다!');
+    };
     return (
-        <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <ProductSearch />
-            <div>mysql data</div>
-            <MysqlProduct />
+        <div className="flex flex-col h-screen">
+            <div>장바구니</div>
+
+            <ShopingCart />
+
+            {/* <ProductSearch /> */}
+
+            {/* <MysqlProduct /> */}
+
+            <div></div>
         </div>
     );
 }
