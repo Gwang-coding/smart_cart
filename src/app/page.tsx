@@ -2,7 +2,7 @@
 import MysqlProduct from '@/components/MysqlProduct';
 import ProductSearch from '@/components/ProductSearch';
 
-import ShopingCart from './shoppingcart';
+import ShoppingCart from '@/container/ShoppingCart';
 
 export default function Home() {
     const handleClick = () => {
@@ -10,10 +10,7 @@ export default function Home() {
     };
     return (
         <div className="flex flex-col h-screen">
-            <div>장바구니</div>
-
-            <ShopingCart />
-
+            <ShoppingCart />
             {/* <ProductSearch /> */}
 
             {/* <MysqlProduct /> */}
