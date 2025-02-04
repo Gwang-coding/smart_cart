@@ -13,7 +13,7 @@ function Modal({ isOpen, handleConfirm, handleClose }: ModalProps) {
     if (!isOpen) return null; // isOpen이 false일 때는 모달을 렌더링하지 않음
 
     return (
-        <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-500 bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-90">
                 <h2 className="text-lg font-semibold mb-4">선택한 상품을 삭제하시겠습니까?</h2>
                 <div className="flex justify-between space-x-4">
