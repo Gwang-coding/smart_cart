@@ -5,54 +5,38 @@ import { Product } from '@/types/types';
 import { useState, useEffect } from 'react';
 import BuyButton from '@/container/BuyButton';
 import BuyTop from '@/container/BuyTop';
+import { useBarcode } from '@/services/useBarcode';
 
 type ProductWithQuantity = Product & { quantity: number; isChecked: boolean };
 
 export default function ShoppingCart() {
-    const [barcode, setBarcode] = useState<string>('');
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
-    const [error, setError] = useState<string | null>(null);
     const [selectAll, setSelectAll] = useState<boolean>(false);
 
+    const barcodeData = useBarcode();
+
+    useEffect(() => {
+        if (barcodeData) {
+            setProducts((prevProducts) => {
+                const existingProductIndex = prevProducts.findIndex((product) => product.barcode === barcodeData.barcode);
+
+                if (existingProductIndex !== -1) {
+                    // 이미 존재하는 상품이면 수량 증가
+                    return prevProducts.map((product, index) =>
+                        index === existingProductIndex ? { ...product, quantity: product.quantity + 1 } : product
+                    );
+                } else {
+                    // 새로운 상품 추가
+                    return [...prevProducts, { ...barcodeData, quantity: 1, isChecked: false }];
+                }
+            });
+        }
+    }, [barcodeData]);
     const getTotalProduct = () => {
         return products.filter((product) => product.isChecked).length;
     };
     const getTotalPrice = () => {
         return products.filter((product) => product.isChecked).reduce((total, product) => total + product.price * product.quantity, 0);
-    };
-    const handleSearch = async () => {
-        if (!barcode.trim()) {
-            setError('Please enter a barcode.');
-            return;
-        }
-
-        try {
-            const res = await fetch(`http://192.168.0.7:3001/product/${barcode}`, { cache: 'no-store' });
-            console.log(res);
-            if (!res.ok) {
-                throw new Error('Product not found');
-            }
-
-            const data: Product = await res.json();
-            setProducts((prevProducts) => {
-                const existingProductIndex = prevProducts.findIndex((p) => p.barcode === data.barcode);
-
-                if (existingProductIndex !== -1) {
-                    return prevProducts.map((product, index) =>
-                        index === existingProductIndex ? { ...product, quantity: product.quantity + 1 } : product
-                    );
-                } else {
-                    return [...prevProducts, { ...data, quantity: 1, isChecked: false }];
-                }
-            });
-
-            setError(null);
-            setBarcode('');
-        } catch (err) {
-            console.error(err);
-            setError('Product not found');
-            setBarcode('');
-        }
     };
 
     const handleRemoveProduct = (barcode: string) => {
@@ -108,11 +92,6 @@ export default function ShoppingCart() {
                         </div>
                     </div>
                 ))}
-                <div>
-                    <input type="text" value={barcode} onChange={(e) => setBarcode(e.target.value)} placeholder="enter barcode id" />
-                    <button onClick={handleSearch}>검색</button>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                </div>
             </div>
             <BuyButton getTotalPrice={getTotalPrice()} totalProduct={getTotalProduct()} />
         </div>
