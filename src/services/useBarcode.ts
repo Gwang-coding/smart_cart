@@ -4,11 +4,11 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:3001'); // NestJS 서버 주소
 
-export const useBarcode = (): Product | null => {
-    const [barcodeData, setBarcodeData] = useState(null);
+export const useBarcode = (): { isScan: boolean; getProduct: Product | null } => {
+    const [barcodeData, setBarcodeData] = useState<{ isScan: boolean; getProduct: Product | null }>({ isScan: false, getProduct: null });
 
     useEffect(() => {
-        socket.on('barcodeData', (data) => {
+        socket.on('barcodeData', (data: { isScan: boolean; getProduct: Product }) => {
             console.log('Received barcode data:', data);
             setBarcodeData(data); // 상태 업데이트
         });
