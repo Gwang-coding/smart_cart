@@ -1,21 +1,11 @@
 // src/app/[id]/page.tsx
-
-export const dynamic = 'force-dynamic'; // 추가
+export const dynamic = 'force-dynamic';
 
 import PageClient from './PageClient';
 
-interface CartPageProps {
-    params: {
-        id: string;
-    };
-    searchParams: {
-        token?: string;
-    };
-}
-
-export default function Page({ params, searchParams }: CartPageProps) {
+export default function Page({ params, searchParams }: { params: { id: string }; searchParams: { token?: string } }) {
     const cartId = parseInt(params.id);
-    const token = searchParams.token ?? '';
+    const token = searchParams?.token ?? '';
 
     return <PageClient cartId={cartId} token={token} />;
 }
