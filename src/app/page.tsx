@@ -1,22 +1,10 @@
-'use client';
-
-import Top from '@/components/Top';
-import ShoppingCart from '@/container/ShoppingCart';
-import { useParams, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import PageClient from './PageClient';
 
 export default function Home() {
-    const params = useParams();
-    const searchParams = useSearchParams();
-
-    const cartId = parseInt(params?.id as string);
-    const token = searchParams?.get('token') ?? '';
-
     return (
-        <div className="flex flex-col h-screen">
-            <div className="w-full h-full">
-                <Top />
-                <ShoppingCart cartId={cartId} token={token} />
-            </div>
-        </div>
+        <Suspense fallback={<div>로딩 중...</div>}>
+            <PageClient />
+        </Suspense>
     );
 }
