@@ -1,15 +1,17 @@
-'use client';
-
 import Top from '@/components/Top';
 import ShoppingCart from '@/container/ShoppingCart';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
-export default function Home() {
-    const params = useParams();
-    const searchParams = useSearchParams();
+interface CartPageProps {
+    params: {
+        id: string;
+    };
+}
 
-    const cartId = parseInt(params?.id as string);
-    const token = searchParams?.get('token') ?? '';
+export default function Home({ params }: CartPageProps) {
+    const cartId = parseInt(params.id);
+    const searchParams = useSearchParams(); // Next.js 훅
+    const token = searchParams?.get('token') ?? ''; // get으로 불러와야 함
 
     return (
         <div className="flex flex-col h-screen">
