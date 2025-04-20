@@ -1,41 +1,22 @@
+'use client';
+
 import Top from '@/components/Top';
 import ShoppingCart from '@/container/ShoppingCart';
+import { useParams, useSearchParams } from 'next/navigation';
 
-interface CartPageProps {
-    params: {
-        id: string;
-    };
-    searchParams: {
-        token: string;
-    };
-}
+export default function Home() {
+    const params = useParams();
+    const searchParams = useSearchParams();
 
-export default function Home({ params, searchParams }: CartPageProps) {
-    const cartId = parseInt(params.id);
-    const { token } = searchParams as { token: string };
+    const cartId = parseInt(params?.id as string);
+    const token = searchParams?.get('token') ?? '';
+
     return (
         <div className="flex flex-col h-screen">
             <div className="w-full h-full">
                 <Top />
-
                 <ShoppingCart cartId={cartId} token={token} />
             </div>
         </div>
     );
 }
-
-// Helper function to get the title for the Top component
-// function getComponentTitle(componentName: string): string {
-//     switch (componentName) {
-//         case 'ShoppingCart':
-//             return '장바구니';
-//         case 'CheckInventory':
-//             return '재고확인';
-//         case 'SearchProduct':
-//             return '물품 위치찾기';
-//         case 'QR':
-//             return 'QR';
-//         default:
-//             return '장바구니';
-//     }
-// }
