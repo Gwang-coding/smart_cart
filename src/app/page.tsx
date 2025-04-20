@@ -5,21 +5,25 @@ import ShoppingCart from '@/container/ShoppingCart';
 import SearchProduct from '@/container/SearchProduct';
 import CheckInventory from '@/container/CheckInventory';
 import QR from '@/container/QR';
-export default function Home() {
-    const [activeComponent, setActiveComponent] = useState('ShoppingCart');
-
-    // Navigation handler that will be passed to Top component
-    const handleNavigation = (componentName: string) => {
-        setActiveComponent(componentName);
+interface CartPageProps {
+    params: {
+        id: string;
     };
-
+    searchParams: {
+        token: string;
+    };
+}
+export default function Home({ params, searchParams }: CartPageProps) {
+    const [activeComponent, setActiveComponent] = useState('ShoppingCart');
+    const cartId = parseInt(params.id);
+    const token = searchParams.token;
     return (
         <div className="flex flex-col h-screen">
             <div className="w-full h-full">
                 <Top text={getComponentTitle(activeComponent)} />
 
                 {/* Render the active component based on state */}
-                {activeComponent === 'ShoppingCart' && <ShoppingCart />}
+                {activeComponent === 'ShoppingCart' && <ShoppingCart cartId={cartId} token={token} />}
                 {activeComponent === 'CheckInventory' && <CheckInventory />}
                 {activeComponent === 'QR' && <QR />}
                 {activeComponent === 'SearchProduct' && <SearchProduct />}

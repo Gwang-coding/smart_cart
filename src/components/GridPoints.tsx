@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 
 interface Product {
     id: number;
@@ -120,25 +119,6 @@ export default function GridPoints({ width = 400, height = 400, gridSize = 10, i
     }, [grid, width, height, gridSize, imageLoaded]);
 
     // 점 찍기 함수
-    const placePoint = () => {
-        const x = parseInt(xCoord);
-        const y = parseInt(yCoord);
-
-        if (isNaN(x) || isNaN(y) || x < 0 || x >= gridSize || y < 0 || y >= gridSize) {
-            alert(`좌표는 0부터 ${gridSize - 1} 사이여야 합니다.`);
-            return;
-        }
-
-        setGrid((prevGrid) => {
-            const newGrid = [...prevGrid];
-            newGrid[y][x] = 1;
-            return newGrid;
-        });
-
-        // 입력 필드 초기화
-        setXCoord('');
-        setYCoord('');
-    };
 
     // 캔버스 클릭으로 점 찍기
     const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {

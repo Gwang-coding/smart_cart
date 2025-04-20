@@ -22,7 +22,8 @@ export async function POST(request: Request) {
 
     try {
         // 카트가 존재하는지 확인 (없으면 생성)
-        const [carts]: any[] = await connection.execute('SELECT id FROM carts WHERE id = ?', [cartId]);
+        // 방법 3: execute 함수의 반환 타입 지정
+        const [carts] = await connection.execute<mysql.RowDataPacket[]>('SELECT id FROM carts WHERE id = ?', [cartId]);
 
         if (carts.length === 0) {
             // 카트 생성

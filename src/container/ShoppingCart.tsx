@@ -10,8 +10,11 @@ import Modal from '@/container/BuyModal';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 type ProductWithQuantity = Product & { quantity: number; isChecked: boolean; isScan: boolean; unscanCount: number };
-
-export default function ShoppingCart() {
+interface CartViewProps {
+    cartId: number;
+    token: string;
+}
+export default function ShoppingCart({ cartId, token }: CartViewProps) {
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
 
@@ -68,7 +71,7 @@ export default function ShoppingCart() {
                 }
             });
         }
-    }, [getProduct]);
+    }, [getProduct, isScan]); // isScan 추가
 
     const getTotalProduct = () => {
         return products.filter((product) => product.isChecked).length;
