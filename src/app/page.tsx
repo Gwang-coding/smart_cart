@@ -1,10 +1,8 @@
 'use client';
-import { useState } from 'react';
+
 import Top from '@/components/Top';
 import ShoppingCart from '@/container/ShoppingCart';
-import SearchProduct from '@/container/SearchProduct';
-import CheckInventory from '@/container/CheckInventory';
-import QR from '@/container/QR';
+import { use } from 'react';
 interface CartPageProps {
     params: {
         id: string;
@@ -13,37 +11,37 @@ interface CartPageProps {
         token: string;
     };
 }
+
 export default function Home({ params, searchParams }: CartPageProps) {
-    const [activeComponent, setActiveComponent] = useState('ShoppingCart');
     const cartId = parseInt(params.id);
-    const token = searchParams.token;
+
+    // searchParams를 React.use()로 언래핑
+    const unwrappedParams = use(searchParams as any);
+    const token = (use(searchParams as any) as { token: string }).token;
+
     return (
         <div className="flex flex-col h-screen">
             <div className="w-full h-full">
-                <Top text={getComponentTitle(activeComponent)} />
+                <Top />
 
-                {/* Render the active component based on state */}
-                {activeComponent === 'ShoppingCart' && <ShoppingCart cartId={cartId} token={token} />}
-                {activeComponent === 'CheckInventory' && <CheckInventory />}
-                {activeComponent === 'QR' && <QR />}
-                {activeComponent === 'SearchProduct' && <SearchProduct />}
+                <ShoppingCart cartId={cartId} token={token} />
             </div>
         </div>
     );
 }
 
 // Helper function to get the title for the Top component
-function getComponentTitle(componentName: string): string {
-    switch (componentName) {
-        case 'ShoppingCart':
-            return '장바구니';
-        case 'CheckInventory':
-            return '재고확인';
-        case 'SearchProduct':
-            return '물품 위치찾기';
-        case 'QR':
-            return 'QR';
-        default:
-            return '장바구니';
-    }
-}
+// function getComponentTitle(componentName: string): string {
+//     switch (componentName) {
+//         case 'ShoppingCart':
+//             return '장바구니';
+//         case 'CheckInventory':
+//             return '재고확인';
+//         case 'SearchProduct':
+//             return '물품 위치찾기';
+//         case 'QR':
+//             return 'QR';
+//         default:
+//             return '장바구니';
+//     }
+// }
