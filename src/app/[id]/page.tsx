@@ -1,3 +1,7 @@
+// src/app/[id]/page.tsx
+
+export const dynamic = 'force-dynamic'; // 추가
+
 import PageClient from './PageClient';
 
 interface CartPageProps {
