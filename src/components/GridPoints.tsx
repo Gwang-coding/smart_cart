@@ -21,8 +21,6 @@ interface GridPointsProps {
 export default function GridPoints({ width = 400, height = 400, gridSize = 10, imageSrc = './images/martmap.png' }: GridPointsProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [grid, setGrid] = useState<number[][]>([]);
-    const [xCoord, setXCoord] = useState<string>('');
-    const [yCoord, setYCoord] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [searchResults, setSearchResults] = useState<Product[]>([]);
     const [imageLoaded, setImageLoaded] = useState(false);

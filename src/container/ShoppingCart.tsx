@@ -17,8 +17,8 @@ interface CartViewProps {
 export default function ShoppingCart({ cartId, token }: CartViewProps) {
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
-
-    const socketData = useBarcode();
+    // cartId와 token을 useBarcode 훅에 전달
+    const socketData = useBarcode(cartId, token);
     const { isScan, getProduct } = socketData;
 
     // ShoppingCart.tsx의 handleClick 함수 부분
