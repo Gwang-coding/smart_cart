@@ -2,18 +2,14 @@
 
 import Top from '@/components/Top';
 import ShoppingCart from '@/container/ShoppingCart';
-import { useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 
-interface CartPageProps {
-    params: {
-        id: string;
-    };
-}
+export default function Home() {
+    const params = useParams();
+    const searchParams = useSearchParams();
 
-export default function Home({ params }: CartPageProps) {
-    const cartId = parseInt(params.id);
-    const searchParams = useSearchParams(); // Next.js 훅
-    const token = searchParams?.get('token') ?? ''; // get으로 불러와야 함
+    const cartId = parseInt(params?.id as string);
+    const token = searchParams?.get('token') ?? '';
 
     return (
         <div className="flex flex-col h-screen">
