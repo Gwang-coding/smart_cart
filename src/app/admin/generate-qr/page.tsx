@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 
-const GenerateQRPage: React.FC = () => {
+export default function GenerateQRPage() {
     const [cartId, setCartId] = useState<string>('');
     const [qrUrl, setQrUrl] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
@@ -13,7 +13,8 @@ const GenerateQRPage: React.FC = () => {
 
         setLoading(true);
         try {
-            const response = await fetch('/api/generate-cart-qr', {
+            // Nest.js API 호출
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/generate-qr`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,6 +85,4 @@ const GenerateQRPage: React.FC = () => {
             )}
         </div>
     );
-};
-
-export default GenerateQRPage;
+}
