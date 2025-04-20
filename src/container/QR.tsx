@@ -63,6 +63,7 @@ function QR() {
         { id: 6, barcode: '343434', name: '가습조기', price: 12000, quantity: 10 },
         { id: 7, barcode: '8809246061293', name: '드로잉북', price: 18000, quantity: 5 },
         { id: 8, barcode: '8809741171442', name: '전담', price: 28000, quantity: 10 },
+        { id: 8, barcode: '8801051096163', name: '립밤', price: 6500, quantity: 21 },
     ];
 
     const handleScan = (decodedText: string) => {
