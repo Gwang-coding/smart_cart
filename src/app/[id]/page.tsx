@@ -1,9 +1,13 @@
-// src/app/[id]/page.tsx
 export const dynamic = 'force-dynamic';
 
 import PageClient from './PageClient';
 
-export default function Page({ params, searchParams }: { params: { id: string }; searchParams: { token?: string } }) {
+interface Props {
+    params: { id: string };
+    searchParams: { token?: string };
+}
+
+export default function Page({ params, searchParams }: Props) {
     const cartId = parseInt(params.id);
     const token = searchParams?.token ?? '';
 
