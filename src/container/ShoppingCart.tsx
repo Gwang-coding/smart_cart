@@ -8,10 +8,12 @@ import BuyButton from '@/container/BuyButton';
 import { useBarcode } from '@/services/useBarcode';
 import Modal from '@/container/BuyModal';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
-
+type ShoppingCartProps = {
+    sessionToken?: string | null;
+};
 type ProductWithQuantity = Product & { quantity: number; isChecked: boolean; isScan: boolean; unscanCount: number };
 
-export default function ShoppingCart() {
+export default function ShoppingCart({ sessionToken }: ShoppingCartProps) {
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
 
@@ -170,7 +172,14 @@ export default function ShoppingCart() {
                     handleConfirm={handleCloseAndDelete} // 삭제 확인 핸들러 전달
                 />
             </div>
-
+            {/* <div className="mt-32">
+                <div className=" flex justify-center items-center m-5 h-20 rounded-md border bg-blue-500 text-white">
+                    <p className="text-xl font-bold">바로스캔하기</p>
+                </div>
+                <div className="flex justify-center items-center m-5 h-20 rounded-md border border-[#393f47]">
+                    <p className="text-xl font-bold text-[#393f47]">나중에 스캔하기</p>
+                </div>
+            </div> */}
             <div className="flex flex-col justify-start h-full">
                 {products.map((product, index) => (
                     <div
