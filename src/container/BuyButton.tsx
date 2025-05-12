@@ -1,8 +1,6 @@
 // app/container/components/Button.tsx
 'use client'; // 클라이언트 컴포넌트로 지정
 
-import { useRouter } from 'next/navigation';
-
 interface ButtonProps {
     Click?: () => void;
     navigateTo?: string;
@@ -10,9 +8,7 @@ interface ButtonProps {
     getTotalPrice: number;
 }
 
-function BuyButton({ getTotalPrice, totalProduct, Click, navigateTo }: ButtonProps) {
-    const router = useRouter();
-
+function BuyButton({ getTotalPrice, totalProduct, Click }: ButtonProps) {
     return (
         <div className="sticky bottom-0">
             <div className="border-t bg-white border-gray-300 py-1 font-bold text-lg text-center">

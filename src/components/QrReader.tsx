@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 
 interface QrReaderProps {
@@ -46,7 +46,7 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
         return () => {
             stopScanner();
         };
-    }, []);
+    }, [onError]); // onError만 의존성으로 추가
 
     // 카메라 ID가 변경되면 스캐너 재시작
     useEffect(() => {
@@ -56,9 +56,9 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
             }
             startScanner();
         }
-    }, [selectedCameraId]);
+    }, [selectedCameraId, isScanning]);
 
-    const startScanner = () => {
+    const startScanner = useCallback(() => {
         if (!scannerRef.current || !selectedCameraId) return;
 
         scannerRef.current
@@ -87,9 +87,9 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
             .catch((err) => {
                 if (onError) onError('스캐너를 시작할 수 없습니다: ' + err);
             });
-    };
+    }, [selectedCameraId, fps, width, height, onScan, onError]);
 
-    const stopScanner = () => {
+    const stopScanner = useCallback(() => {
         if (scannerRef.current && isScanning) {
             scannerRef.current
                 .stop()
@@ -100,7 +100,7 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
                     if (onError) onError('스캐너를 중지할 수 없습니다: ' + err);
                 });
         }
-    };
+    }, [isScanning, onError]);
 
     const switchCamera = (cameraId: string) => {
         setSelectedCameraId(cameraId);
