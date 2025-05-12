@@ -12,20 +12,12 @@ type ShoppingCartProps = {
     sessionToken?: string | null;
 };
 type ProductWithQuantity = Product & { quantity: number; isChecked: boolean; isScan: boolean; unscanCount: number };
-<<<<<<< HEAD
 
 export default function ShoppingCart({ sessionToken }: ShoppingCartProps) {
-=======
-interface CartViewProps {
-    cartId: number;
-    token: string;
-}
-export default function ShoppingCart({ cartId, token }: CartViewProps) {
->>>>>>> 243434ced545c98f1310c62e05808b2f7798933b
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
-    // cartId와 token을 useBarcode 훅에 전달
-    const socketData = useBarcode(cartId, token);
+
+    const socketData = useBarcode();
     const { isScan, getProduct } = socketData;
 
     // ShoppingCart.tsx의 handleClick 함수 부분
@@ -78,7 +70,7 @@ export default function ShoppingCart({ cartId, token }: CartViewProps) {
                 }
             });
         }
-    }, [getProduct, isScan]); // isScan 추가
+    }, [getProduct]);
 
     const getTotalProduct = () => {
         return products.filter((product) => product.isChecked).length;

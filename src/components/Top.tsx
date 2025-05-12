@@ -1,7 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { useState, useRef } from 'react';
-import Image from 'next/image';
 
 interface TopProps {
     text?: string; // 선택적 prop으로 정의
@@ -31,21 +30,13 @@ export default function Top({ text = '장바구니', cartid, sessionToken, curre
     return (
         <div className="relative flex itmes-center justify-center p-3 border-solid border-black border-b-2 mb-1">
             <div className="absolute left-0 align-center justify-center flex">
-                <Image
+                <img
                     onClick={() => {
                         setSidebar(!sidebar);
                     }}
-<<<<<<< HEAD
                     className="w-6 h-6 ml-5 mt-2"
                     src="/icons/menu.svg"
                     alt="Menu"
-=======
-                    className="ml-5 mt-2"
-                    src="/icons/menu.svg"
-                    alt="메뉴 버튼"
-                    width={24}
-                    height={24}
->>>>>>> 243434ced545c98f1310c62e05808b2f7798933b
                 />
             </div>
             {sidebar && (
@@ -53,15 +44,12 @@ export default function Top({ text = '장바구니', cartid, sessionToken, curre
                     className="bg-white absolute w-[190px] h-[100vh] left-0 flex flex-col items-start overflow-hidden shadow-md z-10"
                     ref={sidebarRef}
                 >
-                    <Image
+                    <img
                         onClick={() => {
                             setSidebar(false);
                         }}
-                        className="ml-5 mt-2"
+                        className="ml-5 mt-2 w-6"
                         src="/icons/pagedown.svg"
-                        alt="사이드바 닫기"
-                        width={24}
-                        height={24}
                     />
                     <div className="flex flex-col gap-4 items-end w-full pr-8 mt-8 font-medium">
                         <div
