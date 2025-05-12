@@ -5,16 +5,26 @@ import React, { useState, useRef } from 'react';
 interface TopProps {
     text?: string; // 선택적 prop으로 정의
     cartid?: string;
+    sessionToken?: string | null;
+    currentPath?: string | null;
 }
 
-export default function Top({ text = '장바구니', cartid }: TopProps) {
+export default function Top({ text = '장바구니', cartid, sessionToken, currentPath }: TopProps) {
     const sidebarRef = useRef(null);
     const [sidebar, setSidebar] = useState(false);
     const router = useRouter();
     // 네비게이션 핸들러
     const handleNavigation = (componentName: string, menuText: string) => {
-        setSidebar(false); // 메뉴 선택 후 사이드바 닫기
-        router.push(`/${cartid}/${componentName}?menu=${encodeURIComponent(menuText)}`);
+        setSidebar(false);
+
+        // 세션 토큰을 URL에 포함 (중요!)
+        const sessionParam = sessionToken ? `&session=${sessionToken}` : '';
+
+        // 페이지 경로 생성 (소문자 사용)
+        const url = `/main/${cartid}/${componentName.toLowerCase()}?menu=${encodeURIComponent(menuText)}${sessionParam}`;
+
+        console.log('Navigating to:', url);
+        router.push(url);
     };
 
     return (
@@ -25,7 +35,7 @@ export default function Top({ text = '장바구니', cartid }: TopProps) {
                         setSidebar(!sidebar);
                     }}
                     className="w-6 h-6 ml-5 mt-2"
-                    src="./icons/menu.svg"
+                    src="/icons/menu.svg"
                     alt="Menu"
                 />
             </div>
