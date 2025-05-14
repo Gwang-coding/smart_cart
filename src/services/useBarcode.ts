@@ -11,7 +11,7 @@ export const useBarcode = (cartId?: number, token?: string): { isScan: boolean; 
     useEffect(() => {
         // cartId와 token이 제공된 경우에만 소켓 연결
         if (cartId && token) {
-            const socket = io('http://localhost:3001', {
+            const socket = io('https://smartcartback-production.up.railway.app', {
                 query: { cartId, token },
             });
 

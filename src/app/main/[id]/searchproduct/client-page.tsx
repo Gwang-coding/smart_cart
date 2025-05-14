@@ -26,7 +26,7 @@ export default function SearchProductPageClient({ cartId }: { cartId: string }) 
         // 세션 토큰 유효성 검증
         const validateToken = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/carts/${cartId}/validate-session`, {
+                const response = await fetch(`https://smartcartback-production.up.railway.app/carts/${cartId}/validate-session`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
