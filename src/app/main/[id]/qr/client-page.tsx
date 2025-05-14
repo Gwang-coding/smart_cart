@@ -1,13 +1,12 @@
-// app/main/[id]/searchproduct/client-page.tsx
-
+// app/main/[id]/qr/client-page.tsx
 'use client';
 
 import AuthenticatedLayout from '@/components/AuthenticatedLayout';
-import SearchProduct from '@/container/SearchProduct';
+import QR from '@/container/QR';
 export default function CheckInventoryPageClient({ cartId }: { cartId: string }) {
     return (
         <AuthenticatedLayout cartId={cartId}>
-            <SearchProduct />
+            <QR />
         </AuthenticatedLayout>
     );
 }
