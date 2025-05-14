@@ -34,5 +34,5 @@ export default function TopWrapper({ cartId }: { cartId: string }) {
         console.log('Current session token:', sessionToken);
     }, [sessionToken]);
 
-    return <Top text={menuText} cartid={cartId} sessionToken={sessionToken} currentPath={pathname} />;
+    return <Top text={menuText} cartid={cartId} sessionToken={sessionToken} />;
 }

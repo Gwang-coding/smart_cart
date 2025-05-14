@@ -10,10 +10,6 @@ export default function MainCartPageClient({ cartId }: { cartId: string }) {
     const searchParams = useSearchParams();
     const sessionToken = searchParams?.get('session');
 
-    const [isAuthorized, setIsAuthorized] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [cart, setCart] = useState({ items: [] });
-
     // 세션 토큰 검증
     useEffect(() => {
         const validateSession = async () => {
@@ -43,8 +39,6 @@ export default function MainCartPageClient({ cartId }: { cartId: string }) {
                 localStorage.setItem('sessionToken', sessionToken);
                 localStorage.setItem('cartId', cartId);
                 // 인증 성공
-                setIsAuthorized(true);
-                setIsLoading(false);
 
                 // 카트 정보 로드
                 // loadCart();
@@ -56,13 +50,10 @@ export default function MainCartPageClient({ cartId }: { cartId: string }) {
 
         validateSession();
     }, [cartId, router, sessionToken]);
-    const goToShoppingCart = () => {
-        router.push(`/main/${cartId}/shoppingcart?session=${sessionToken}`);
-    };
 
     return (
         <div className="h-full">
-            <ShoppingCart sessionToken={sessionToken} />
+            <ShoppingCart />
         </div>
     );
 }

@@ -8,12 +8,10 @@ import BuyButton from '@/container/BuyButton';
 import { useBarcode } from '@/services/useBarcode';
 import Modal from '@/container/BuyModal';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
-type ShoppingCartProps = {
-    sessionToken?: string | null;
-};
+
 type ProductWithQuantity = Product & { quantity: number; isChecked: boolean; isScan: boolean; unscanCount: number };
 
-export default function ShoppingCart({ sessionToken }: ShoppingCartProps) {
+export default function ShoppingCart() {
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
 
