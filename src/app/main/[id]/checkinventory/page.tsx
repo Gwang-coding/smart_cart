@@ -1,4 +1,4 @@
-// app/main/[id]/qr/page.tsx
+// app/main/[id]/checkinventory/page.tsx
 import { Suspense } from 'react';
 import CheckInventoryPageClient from './client-page';
 
