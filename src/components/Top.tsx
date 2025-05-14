@@ -6,10 +6,9 @@ interface TopProps {
     text?: string; // 선택적 prop으로 정의
     cartid?: string;
     sessionToken?: string | null;
-    currentPath?: string | null;
 }
 
-export default function Top({ text = '장바구니', cartid, sessionToken, currentPath }: TopProps) {
+export default function Top({ text = '장바구니', cartid, sessionToken }: TopProps) {
     const sidebarRef = useRef(null);
     const [sidebar, setSidebar] = useState(false);
     const router = useRouter();
