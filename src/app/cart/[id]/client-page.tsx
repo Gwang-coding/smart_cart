@@ -26,7 +26,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
         setIsLoading(false);
 
         // 웹소켓 연결
-        const socket: Socket = io('http://localhost:3001', {
+        const socket: Socket = io('http://smartcartback-production.up.railway.app', {
             query: { cartId },
         });
 
@@ -73,7 +73,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
             <div className="mt-6 text-gray-700">
                 <p className="text-sm">테스트를 위해 Insomnia에서 아래 요청을 보내세요:</p>
                 <pre className="mt-2 p-3 bg-gray-100 rounded text-xs overflow-x-auto">
-                    {`POST http://localhost:3001/carts/${cartId}/scan
+                    {`POST https://smartcartback-production.up.railway.app/carts/${cartId}/scan
     Content-Type: application/json
     
     {
