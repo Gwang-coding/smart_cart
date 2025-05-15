@@ -1,12 +1,11 @@
 // app/main/[id]/top-wrapper.tsx
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Top from '@/components/Top';
 
 export default function TopWrapper({ cartId }: { cartId: string }) {
-    const pathname = usePathname();
     const searchParams = useSearchParams();
     const menuText = searchParams?.get('menu') || '장바구니';
     const sessionFromUrl = searchParams?.get('session');
