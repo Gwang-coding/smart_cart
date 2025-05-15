@@ -68,7 +68,7 @@ export default function ShoppingCart() {
                 }
             });
         }
-    }, [getProduct]);
+    }, [getProduct, isScan]);
 
     const getTotalProduct = () => {
         return products.filter((product) => product.isChecked).length;
