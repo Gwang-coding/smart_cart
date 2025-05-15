@@ -1,7 +1,9 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import React, { useState, useRef } from 'react';
-
+import menu from '../../public/icons/menu.svg';
+import close from '../../public/icons/pagedown.svg';
 interface TopProps {
     text?: string; // 선택적 prop으로 정의
     cartid?: string;
@@ -29,13 +31,14 @@ export default function Top({ text = '장바구니', cartid, sessionToken }: Top
     return (
         <div className="relative flex itmes-center justify-center p-3 border-solid border-black border-b-2 mb-1">
             <div className="absolute left-0 align-center justify-center flex">
-                <img
+                <Image
+                    src={menu}
+                    alt="menu"
+                    width={100}
+                    height={100}
                     onClick={() => {
                         setSidebar(!sidebar);
                     }}
-                    className="w-6 h-6 ml-5 mt-2"
-                    src="/icons/menu.svg"
-                    alt="Menu"
                 />
             </div>
             {sidebar && (
@@ -43,13 +46,16 @@ export default function Top({ text = '장바구니', cartid, sessionToken }: Top
                     className="bg-white absolute w-[190px] h-[100vh] left-0 flex flex-col items-start overflow-hidden shadow-md z-10"
                     ref={sidebarRef}
                 >
-                    <img
+                    <Image
+                        src={close}
+                        alt="close"
+                        width={100}
+                        height={100}
                         onClick={() => {
                             setSidebar(false);
                         }}
-                        className="ml-5 mt-2 w-6"
-                        src="/icons/pagedown.svg"
                     />
+
                     <div className="flex flex-col gap-4 items-end w-full pr-8 mt-8 font-medium">
                         <div
                             className="cursor-pointer hover:text-blue-500 transition-colors"
