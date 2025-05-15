@@ -15,15 +15,21 @@ export default function ShoppingCart() {
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
     const { cartId, sessionToken } = useCart();
+    // buytop에서 가져오기
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    if (!cartId) {
-        return <div>카트 정보를 찾을 수 없습니다.</div>;
-    }
-    const socketData = useBarcode(cartId, sessionToken);
+    const socketData = useBarcode(cartId || '', sessionToken);
     const { isScan, getProduct } = socketData;
+    const getTotalProduct = () => {
+        return products.filter((product) => product.isChecked).length;
+    };
 
+    const getTotalPrice = () => {
+        return products.filter((product) => product.isChecked).reduce((total, product) => total + product.price * product.quantity, 0);
+    };
     // ShoppingCart.tsx의 handleClick 함수 부분
     const handleClick = async () => {
+        if (!cartId) return;
         // 고유한 주문 ID 생성 (최소 6자 이상)
         const uniqueId = Date.now().toString();
         const orderId = `order_${uniqueId}`; // 이렇게 하면 최소 12자 이상이 됩니다
@@ -50,6 +56,7 @@ export default function ShoppingCart() {
     };
     // 상품 추가
     useEffect(() => {
+        if (!cartId) return;
         console.log(getProduct);
         if (getProduct) {
             setProducts((prevProducts) => {
@@ -72,15 +79,7 @@ export default function ShoppingCart() {
                 }
             });
         }
-    }, [getProduct, isScan]);
-
-    const getTotalProduct = () => {
-        return products.filter((product) => product.isChecked).length;
-    };
-
-    const getTotalPrice = () => {
-        return products.filter((product) => product.isChecked).reduce((total, product) => total + product.price * product.quantity, 0);
-    };
+    }, [getProduct, isScan, cartId]);
 
     const handleRemoveProduct = (barcode: string) => {
         setProducts((prevProducts) => prevProducts.filter((p) => p.barcode !== barcode));
@@ -115,8 +114,6 @@ export default function ShoppingCart() {
             })
         );
     };
-    // buytop에서 가져오기
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // 모달을 열기 위한 핸들러
     const handleDelete = () => {
@@ -133,9 +130,10 @@ export default function ShoppingCart() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-    // ShoppingCart.tsx에 추가
+    // 로컬 스토리지에서 장바구니 데이터 불러오기
     useEffect(() => {
-        // 로컬 스토리지에서 장바구니 데이터 불러오기
+        if (!cartId) return; // cartId가 없으면 useEffect 내부 로직 실행 안함
+
         const savedCart = localStorage.getItem('shoppingCart');
         if (savedCart) {
             try {
@@ -145,15 +143,19 @@ export default function ShoppingCart() {
                 console.error('장바구니 데이터 파싱 오류:', error);
             }
         }
-    }, []); // 컴포넌트 마운트 시 한 번만 실행
+    }, [cartId]); // cartId 의존성 추가
 
     // 장바구니가 변경될 때마다 로컬 스토리지 업데이트
     useEffect(() => {
+        if (!cartId) return; // cartId가 없으면 useEffect 내부 로직 실행 안함
+
         if (products.length > 0) {
             localStorage.setItem('shoppingCart', JSON.stringify(products));
         }
-    }, [products]);
-
+    }, [products, cartId]); // cartId 의존성 추가
+    if (!cartId) {
+        return <div>카트 정보를 찾을 수 없습니다.</div>;
+    }
     return (
         <div className="w-full h-full flex flex-col justify-between">
             <div className="w-full flex justify-between items-center py-2 px-4 border-b-[1px]  border-gray-300">

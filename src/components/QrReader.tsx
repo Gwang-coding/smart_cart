@@ -19,45 +19,6 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
     const scannerRef = useRef<Html5Qrcode | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        // 컴포넌트가 마운트되면 QR 스캐너 인스턴스 생성
-        if (containerRef.current) {
-            scannerRef.current = new Html5Qrcode('qr-reader');
-
-            // 사용 가능한 카메라 목록 가져오기
-            Html5Qrcode.getCameras()
-                .then((devices) => {
-                    if (devices && devices.length > 0) {
-                        setCameras(devices);
-                        setSelectedCameraId(devices[0].id);
-                        setHasCamera(true);
-                    } else {
-                        setHasCamera(false);
-                        if (onError) onError('카메라를 찾을 수 없습니다.');
-                    }
-                })
-                .catch((err) => {
-                    setHasCamera(false);
-                    if (onError) onError('카메라 접근 권한이 없습니다: ' + err);
-                });
-        }
-
-        // 컴포넌트 언마운트 시 스캐너 정리
-        return () => {
-            stopScanner();
-        };
-    }, [onError]); // onError만 의존성으로 추가
-
-    // 카메라 ID가 변경되면 스캐너 재시작
-    useEffect(() => {
-        if (selectedCameraId) {
-            if (isScanning) {
-                stopScanner();
-            }
-            startScanner();
-        }
-    }, [selectedCameraId, isScanning]);
-
     const startScanner = useCallback(() => {
         if (!scannerRef.current || !selectedCameraId) return;
 
@@ -101,6 +62,44 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
                 });
         }
     }, [isScanning, onError]);
+    useEffect(() => {
+        // 컴포넌트가 마운트되면 QR 스캐너 인스턴스 생성
+        if (containerRef.current) {
+            scannerRef.current = new Html5Qrcode('qr-reader');
+
+            // 사용 가능한 카메라 목록 가져오기
+            Html5Qrcode.getCameras()
+                .then((devices) => {
+                    if (devices && devices.length > 0) {
+                        setCameras(devices);
+                        setSelectedCameraId(devices[0].id);
+                        setHasCamera(true);
+                    } else {
+                        setHasCamera(false);
+                        if (onError) onError('카메라를 찾을 수 없습니다.');
+                    }
+                })
+                .catch((err) => {
+                    setHasCamera(false);
+                    if (onError) onError('카메라 접근 권한이 없습니다: ' + err);
+                });
+        }
+
+        // 컴포넌트 언마운트 시 스캐너 정리
+        return () => {
+            stopScanner();
+        };
+    }, [onError, stopScanner]); // onError만 의존성으로 추가
+
+    // 카메라 ID가 변경되면 스캐너 재시작
+    useEffect(() => {
+        if (selectedCameraId) {
+            if (isScanning) {
+                stopScanner();
+            }
+            startScanner();
+        }
+    }, [selectedCameraId, isScanning, startScanner, stopScanner]);
 
     const switchCamera = (cameraId: string) => {
         setSelectedCameraId(cameraId);
