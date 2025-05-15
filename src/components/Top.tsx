@@ -7,10 +7,9 @@ import close from '../../public/icons/pagedown.svg';
 interface TopProps {
     text?: string; // 선택적 prop으로 정의
     cartid?: string;
-    sessionToken?: string | null;
 }
 
-export default function Top({ text = '장바구니', cartid, sessionToken }: TopProps) {
+export default function Top({ text = '장바구니', cartid }: TopProps) {
     const sidebarRef = useRef(null);
     const [sidebar, setSidebar] = useState(false);
     const router = useRouter();
@@ -18,11 +17,8 @@ export default function Top({ text = '장바구니', cartid, sessionToken }: Top
     const handleNavigation = (componentName: string, menuText: string) => {
         setSidebar(false);
 
-        // 세션 토큰을 URL에 포함 (중요!)
-        const sessionParam = sessionToken ? `&session=${sessionToken}` : '';
-
         // 페이지 경로 생성 (소문자 사용)
-        const url = `/main/${cartid}/${componentName.toLowerCase()}?menu=${encodeURIComponent(menuText)}${sessionParam}`;
+        const url = `/main/${cartid}/${componentName.toLowerCase()}?menu=${encodeURIComponent(menuText)}`;
 
         console.log('Navigating to:', url);
         router.push(url);
