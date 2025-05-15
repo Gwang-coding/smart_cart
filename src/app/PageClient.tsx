@@ -8,14 +8,14 @@ export default function PageClient() {
     const params = useParams();
     const searchParams = useSearchParams();
 
-    const cartId = parseInt(params?.id as string);
-    const token = searchParams?.get('token') ?? '';
+    const cartId = params?.id as string;
+    const sessionToken = searchParams?.get('token') ?? '';
 
     return (
         <div className="flex flex-col h-screen">
             <div className="w-full h-full">
-                <Top />
-                <ShoppingCart cartId={cartId} token={token} />
+                <Top cartid={cartId} sessionToken={sessionToken} />
+                <ShoppingCart />
             </div>
         </div>
     );
