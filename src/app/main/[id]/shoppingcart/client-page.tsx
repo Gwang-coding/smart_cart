@@ -3,7 +3,7 @@
 
 import AuthenticatedLayout from '@/components/AuthenticatedLayout';
 import ShoppingCart from '@/container/ShoppingCart';
-export default function CheckInventoryPageClient({ cartId }: { cartId: string }) {
+export default function ShoppingCartPageClient({ cartId }: { cartId: string }) {
     return (
         <AuthenticatedLayout cartId={cartId}>
             <ShoppingCart />
