@@ -30,12 +30,12 @@ export default function Top({ text = '장바구니', cartid, sessionToken }: Top
 
     return (
         <div className="relative flex itmes-center justify-center p-3 border-solid border-black border-b-2 mb-1">
-            <div className="absolute left-0 align-center justify-center flex">
+            <div className="absolute left-4 top-5 ">
                 <Image
                     src={menu}
                     alt="menu"
-                    width={100}
-                    height={100}
+                    width={25}
+                    height={25}
                     onClick={() => {
                         setSidebar(!sidebar);
                     }}
@@ -46,16 +46,17 @@ export default function Top({ text = '장바구니', cartid, sessionToken }: Top
                     className="bg-white absolute w-[190px] h-[100vh] left-0 flex flex-col items-start overflow-hidden shadow-md z-10"
                     ref={sidebarRef}
                 >
-                    <Image
-                        src={close}
-                        alt="close"
-                        width={100}
-                        height={100}
-                        onClick={() => {
-                            setSidebar(false);
-                        }}
-                    />
-
+                    <div className="absolute left-4 top-2 ">
+                        <Image
+                            src={close}
+                            alt="close"
+                            width={25}
+                            height={25}
+                            onClick={() => {
+                                setSidebar(false);
+                            }}
+                        />
+                    </div>
                     <div className="flex flex-col gap-4 items-end w-full pr-8 mt-8 font-medium">
                         <div
                             className="cursor-pointer hover:text-blue-500 transition-colors"
