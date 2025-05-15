@@ -1,7 +1,7 @@
 // app/main/[id]/client-page.tsx (클라이언트 컴포넌트)
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ShoppingCart from '@/container/ShoppingCart';
 
