@@ -2,7 +2,7 @@ import { Product } from '@/types/types';
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
-export const useBarcode = (cartId?: number, token?: string): { isScan: boolean; getProduct: Product | null } => {
+export const useBarcode = (cartId: string, token?: string | null): { isScan: boolean; getProduct: Product | null } => {
     const [barcodeData, setBarcodeData] = useState<{ isScan: boolean; getProduct: Product | null }>({
         isScan: false,
         getProduct: null,
