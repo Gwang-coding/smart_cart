@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Product } from '@/types/types';
 import { useState, useEffect } from 'react';
 import BuyButton from '@/container/BuyButton';
-
+import { useCart } from '@/contexts/CartContext';
 import { useBarcode } from '@/services/useBarcode';
 import Modal from '@/container/BuyModal';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
@@ -14,8 +14,12 @@ type ProductWithQuantity = Product & { quantity: number; isChecked: boolean; isS
 export default function ShoppingCart() {
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
+    const { cartId, sessionToken } = useCart();
 
-    const socketData = useBarcode();
+    if (!cartId) {
+        return <div>카트 정보를 찾을 수 없습니다.</div>;
+    }
+    const socketData = useBarcode(cartId, sessionToken);
     const { isScan, getProduct } = socketData;
 
     // ShoppingCart.tsx의 handleClick 함수 부분

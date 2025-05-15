@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useRouter } from 'next/navigation';
 import { io, Socket } from 'socket.io-client';
+import { useCart } from '@/contexts/CartContext';
 
 export default function QRPageClient({ cartId }: { cartId: string }) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [qrData, setQrData] = useState({ content: '', token: '' });
     const [scanned, setScanned] = useState(false);
-
+    const { setCartId, setSessionToken } = useCart();
     useEffect(() => {
         // QR 토큰 생성
         const token = `cart_${cartId}_${Date.now()}`;
@@ -41,10 +42,15 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
             if (data.type === 'scan' && data.cartId === cartId && data.qrToken === token) {
                 console.log('QR 스캔 이벤트 수신, 리다이렉트 준비');
                 setScanned(true);
+                setCartId(cartId);
+                setSessionToken(data.sessionToken);
 
+                // localStorage에 직접 저장 (Context가 자동으로 처리하지 않는 경우)
+                localStorage.setItem('cartId', cartId);
+                localStorage.setItem('sessionToken', data.sessionToken);
                 // 세션 토큰이 포함된 URL로 리다이렉트
                 setTimeout(() => {
-                    router.push(`/main/${cartId}?session=${data.sessionToken}`);
+                    router.push(`/main/${cartId}`);
                 }, 1500);
             }
         });
@@ -56,7 +62,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
             socket.disconnect();
             console.log('웹소켓 연결 해제됨');
         };
-    }, [cartId, router]);
+    }, [cartId, router, setCartId, setSessionToken]);
 
     if (isLoading) {
         return <div className="flex items-center justify-center min-h-screen">QR 코드 생성 중...</div>;
@@ -73,7 +79,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
             <div className="mt-6 text-gray-700">
                 <p className="text-sm">테스트를 위해 Insomnia에서 아래 요청을 보내세요:</p>
                 <pre className="mt-2 p-3 bg-gray-100 rounded text-xs overflow-x-auto">
-                    {`POST https://smartcartback-production.up.railway.app/carts/${cartId}/scan
+                    {`POST https://smartcartback-production.up.railway.app/${cartId}/scan
     Content-Type: application/json
     
     {
