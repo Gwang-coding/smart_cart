@@ -53,18 +53,6 @@ function QR() {
             alert(`${scannedProduct.name}이(가) 장바구니에 추가되었습니다.`);
         }
     };
-    // 샘플 제품 데이터베이스 (실제로는 API에서 가져와야 함)
-    // const sampleProducts: Product[] = [
-    //     { id: 1, barcode: '654321', name: '위대한 게츠비', price: 10000, quantity: 15 },
-    //     { id: 2, barcode: '123456', name: '종주 사과', price: 2000, quantity: 42 },
-    //     { id: 3, barcode: '098765', name: 'raspberry pi 5', price: 34000, quantity: 7 },
-    //     { id: 4, barcode: '8801056175900', name: '코카콜라제로', price: 2000, quantity: 23 },
-    //     { id: 5, barcode: '232323', name: '펩시 제로', price: 2000, quantity: 35 },
-    //     { id: 6, barcode: '343434', name: '가습조기', price: 12000, quantity: 10 },
-    //     { id: 7, barcode: '8809246061293', name: '드로잉북', price: 18000, quantity: 5 },
-    //     { id: 8, barcode: '8809741171442', name: '전담', price: 28000, quantity: 10 },
-    //     { id: 8, barcode: '8801051096163', name: '립밤', price: 6500, quantity: 21 },
-    // ];
 
     const handleScan = async (decodedText: string) => {
         setScannedResult(decodedText); // 상품텍스트
