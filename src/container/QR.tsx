@@ -107,7 +107,7 @@ function QR() {
                     </div>
 
                     <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-                        {!scannedProduct && <QrReader onScan={handleScan} onError={handleError} width={320} height={320} />}
+                        <QrReader onScan={handleScan} onError={handleError} width={320} height={320} />
                     </div>
 
                     {isLoading && (
