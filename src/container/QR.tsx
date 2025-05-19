@@ -78,9 +78,14 @@ function QR() {
             }
             const product: Product = await res.json();
             setScannedProduct(product);
-        } catch (err: any) {
-            console.error(err);
-            setError(err.message || '알 수 없는 오류가 발생했습니다.');
+        } catch (err) {
+            if (err instanceof Error) {
+                console.error(err);
+                setError(err.message);
+            } else {
+                console.error(err);
+                setError('알 수 없는 오류가 발생했습니다.');
+            }
             setScannedProduct(null);
         } finally {
             setIsLoading(false);
