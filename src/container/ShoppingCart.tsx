@@ -40,7 +40,7 @@ export default function ShoppingCart() {
         const secretKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string;
 
         if (!secretKey) {
-            console.error('❌ 환경 변수 오류: NEXT_PUBLIC_TOSS_CLIENT_KEY가 설정되지 않았습니다.');
+            console.error('❌ 환경 변수 오류: NEXT_PUBLIC_TOSS_CLIENT_KEY가 설정되지 않음');
             return;
         }
 
