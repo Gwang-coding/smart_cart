@@ -22,29 +22,27 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
     const startScanner = useCallback(async () => {
         if (!scannerRef.current || !selectedCameraId) return;
 
-        try {
-            await scannerRef.current.start(
-                selectedCameraId,
-                {
-                    fps,
-                    qrbox: { width: width - 100, height: height - 100 },
-                    aspectRatio: 1,
-                },
-                (decodedText) => {
-                    if (lastScannedRef.current !== decodedText) {
-                        lastScannedRef.current = decodedText;
-                        onScan(decodedText);
-                    }
-                },
-                (errorMessage) => {
-                    if (!errorMessage.includes('QR code parse error') && onError) {
-                        onError(errorMessage);
-                    }
+        await scannerRef.current.start(
+            selectedCameraId,
+            {
+                fps,
+                qrbox: { width: width - 100, height: height - 100 },
+                aspectRatio: 1,
+            },
+            (decodedText) => {
+                if (lastScannedRef.current !== decodedText) {
+                    lastScannedRef.current = decodedText;
+                    onScan(decodedText);
                 }
-            );
-            setIsScanning(true);
-            console.log('✅ 스캐너 시작됨');
-        } catch (err) {}
+            },
+            (errorMessage) => {
+                if (!errorMessage.includes('QR code parse error') && onError) {
+                    onError(errorMessage);
+                }
+            }
+        );
+        setIsScanning(true);
+        console.log('✅ 스캐너 시작됨');
     }, [selectedCameraId, fps, width, height, onScan, onError]);
 
     const stopScanner = useCallback(async () => {
