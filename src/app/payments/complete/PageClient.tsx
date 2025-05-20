@@ -40,13 +40,13 @@ export default function PaymentSuccess() {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log(response);
+
                 if (response.ok) {
                     const data = await response.json();
                     setPaymentData(data);
                 }
             } catch (error) {
-                console.error('결제 정보를 불러오는 중에 오류가 발생했습니다:', error);
+                console.error('결제 정보를 불러오는 중 오류가 발생했습니다:', error);
             } finally {
                 setIsLoading(false);
             }
