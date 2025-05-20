@@ -71,6 +71,7 @@ export default function CheckInventory({ onSelectProduct }: SearchProductProps) 
     const handleClearSearch = () => {
         setSearchTerm('');
         setError(null);
+        setHasSearched(false);
         // 검색 결과는 그대로 유지하여 이전 검색 결과를 볼 수 있게 함
     };
 
