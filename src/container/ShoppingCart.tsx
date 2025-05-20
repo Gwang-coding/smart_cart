@@ -9,7 +9,7 @@ import { useBarcode } from '@/services/useBarcode';
 import Modal from '@/container/BuyModal';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 
-type ProductWithQuantity = Product & { quantity: number; isChecked: boolean; isScan: boolean; unscanCount: number };
+type ProductWithQuantity = Product & { quantity: number; isChecked: boolean; isScan: boolean; unscanCount: number; img_url: string };
 
 export default function ShoppingCart() {
     const [products, setProducts] = useState<ProductWithQuantity[]>([]);
@@ -54,6 +54,7 @@ export default function ShoppingCart() {
             console.error('결제 요청 오류:', error);
         }
     };
+
     // 상품 추가
     useEffect(() => {
         if (!cartId) return;
@@ -202,7 +203,7 @@ export default function ShoppingCart() {
                         </div>
                         <div className="flex items-center">
                             <div className="relative w-20 h-[90px] ">
-                                <Image src="/images/drawing.jpg" alt="sample" fill className="object-cover" />
+                                <Image src={product.img_url} alt={product.name} fill className="object-cover" />
                             </div>
                             <div className="w-full pl-4 pr-1 flex justify-between flex-col">
                                 <p>{product.price}원</p>
