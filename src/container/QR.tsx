@@ -51,14 +51,25 @@ function QR() {
 
             // 추가 완료 메시지
             alert(`${scannedProduct.name}이(가) 장바구니에 추가되었습니다.`);
+
+            // 상태 초기화 (새 스캔 준비)
+            setScannedResult('');
+            setScannedProduct(null);
         }
     };
 
     const handleScan = async (decodedText: string) => {
-        setScannedResult(decodedText); // 상품텍스트
+        // 같은 바코드를 연속으로 스캔하는 것 방지 (UX 개선)
+        if (decodedText && scannedProduct) {
+            console.log('같은 바코드 연속 스캔 무시:', decodedText);
+            return;
+        }
+
+        setScannedResult(decodedText);
         setIsLoading(true);
         setError(null);
-        console.log(decodedText);
+        console.log('스캔된 바코드:', decodedText);
+
         try {
             const res = await fetch(`https://smartcartback-production.up.railway.app/product/barcode/${decodedText}`);
             if (!res.ok) {
@@ -66,12 +77,13 @@ function QR() {
             }
             const product: Product = await res.json();
             setScannedProduct(product);
+            console.log('상품 정보 로드 성공:', product);
         } catch (err) {
             if (err instanceof Error) {
-                console.error(err);
+                console.error('상품 정보 로드 오류:', err);
                 setError(err.message);
             } else {
-                console.error(err);
+                console.error('알 수 없는 오류:', err);
                 setError('알 수 없는 오류가 발생했습니다.');
             }
             setScannedProduct(null);
@@ -81,8 +93,20 @@ function QR() {
     };
 
     const handleError = (error: string) => {
+        // QR 코드 파싱 오류는 무시 (정상적인 스캔 프로세스의 일부)
+        if (error.includes('QR code parse error') || error.includes('No barcode or QR code detected')) {
+            return;
+        }
+
         console.error('QR 스캔 오류:', error);
         setError(error);
+    };
+
+    // 스캔 결과 초기화
+    const handleReset = () => {
+        setScannedResult('');
+        setScannedProduct(null);
+        setError(null);
     };
 
     return (
@@ -95,18 +119,28 @@ function QR() {
                     </div>
 
                     <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-                        <QrReader onScan={handleScan} onError={handleError} width={320} height={320} />
+                        <QrReader
+                            onScan={handleScan}
+                            onError={handleError}
+                            width={320}
+                            height={320}
+                            continuousScan={true} // 연속 스캔 활성화
+                        />
                     </div>
 
                     {isLoading && (
                         <div className="text-center py-4">
-                            <p className="text-gray-600">정보를 불러오는 중...</p>
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+                            <p className="mt-2 text-gray-600">정보를 불러오는 중...</p>
                         </div>
                     )}
 
                     {error && (
                         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded">
                             <p>{error}</p>
+                            <button onClick={handleReset} className="mt-2 px-4 py-1 bg-red-500 text-white text-sm rounded">
+                                다시 시도
+                            </button>
                         </div>
                     )}
 
@@ -128,12 +162,20 @@ function QR() {
                                 <div className="font-medium">{scannedProduct.price.toLocaleString()}원</div>
                             </div>
 
-                            <button
-                                onClick={handleAddToCart}
-                                className="mt-4 w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                            >
-                                장바구니에 추가
-                            </button>
+                            <div className="flex space-x-2 mt-4">
+                                <button
+                                    onClick={handleAddToCart}
+                                    className="flex-1 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                                >
+                                    장바구니에 추가
+                                </button>
+                                <button
+                                    onClick={handleReset}
+                                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+                                >
+                                    취소
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
