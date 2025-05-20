@@ -29,30 +29,57 @@ export default function ShoppingCart() {
     };
     // ShoppingCart.tsx의 handleClick 함수 부분
     const handleClick = async () => {
-        if (!cartId) return;
+        if (!cartId) {
+            console.error('❌ 결제 실패: cartId가 없습니다.');
+            return;
+        }
+
         // 고유한 주문 ID 생성 (최소 6자 이상)
         const uniqueId = Date.now().toString();
-        const orderId = `order_${uniqueId}`; // 이렇게 하면 최소 12자 이상이 됩니다
+        const orderId = `order_${uniqueId}`;
         const secretKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string;
+
+        if (!secretKey) {
+            console.error('❌ 환경 변수 오류: NEXT_PUBLIC_TOSS_CLIENT_KEY가 설정되지 않았습니다.');
+            return;
+        }
+
         try {
-            const tosspayments = await loadTossPayments(secretKey);
-            console.log('토스페이먼트', tosspayments);
-            await tosspayments.requestPayment('카드', {
-                amount: products
-                    .filter((product) => product.isChecked) // 체크된 상품만 포함
-                    .reduce((acc, curr) => {
-                        return acc + curr.price * curr.quantity; // 수량을 고려한 가격 계산
-                    }, 0), // 초기값을 0으로 설정
-                orderId: orderId, // 수정된 주문 ID
-                orderName: products
-                    .filter((product) => product.isChecked)
-                    .map((product) => product.name)
-                    .join(', '),
+            console.log('✅ Toss 클라이언트 키:', secretKey);
+            console.log('🛒 장바구니 상품 목록:', products);
+
+            const selectedProducts = products.filter((product) => product.isChecked);
+
+            if (selectedProducts.length === 0) {
+                console.error('❌ 결제 실패: 선택된 상품이 없습니다.');
+                return;
+            }
+
+            const amount = selectedProducts.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
+            const orderName = selectedProducts.map((product) => product.name).join(', ');
+
+            console.log('🧾 주문 정보:', {
+                amount,
+                orderId,
+                orderName,
                 successUrl: `${window.location.origin}/api/payments`,
                 failUrl: `${window.location.origin}/api/payments/fail`,
             });
+
+            const tosspayments = await loadTossPayments(secretKey);
+            console.log('✅ TossPayments 객체 로드 완료:', tosspayments);
+
+            await tosspayments.requestPayment('카드', {
+                amount,
+                orderId,
+                orderName,
+                successUrl: `${window.location.origin}/api/payments`,
+                failUrl: `${window.location.origin}/api/payments/fail`,
+            });
+
+            console.log('✅ 결제 요청 성공');
         } catch (error) {
-            console.error('결제 요청 오류:', error);
+            console.error('❌ 결제 요청 중 오류 발생:', error);
         }
     };
 
