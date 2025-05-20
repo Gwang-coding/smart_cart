@@ -5,7 +5,7 @@ import GridPoints from '@/components/GridPoints';
 function SearchProduct() {
     return (
         <div className="p-8">
-            <GridPoints width={300} height={400} gridSize={15} imageSrc="../images/martmap.png" />
+            <GridPoints width={300} height={400} gridSize={15} imageSrc="/images/martmap.png" />
         </div>
     );
 }
