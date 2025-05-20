@@ -26,7 +26,7 @@ export default function Top({ text = '장바구니', cartid }: TopProps) {
 
     return (
         <div className="relative flex itmes-center justify-center p-3 border-solid border-black border-b-2 mb-1">
-            <div className="absolute left-4 top-5 ">
+            <div className="absolute left-4 top-5 cursor-pointer">
                 <Image
                     src={menu}
                     alt="menu"
@@ -42,7 +42,7 @@ export default function Top({ text = '장바구니', cartid }: TopProps) {
                     className="bg-white absolute w-[190px] h-[100vh] left-0 flex flex-col items-start overflow-hidden shadow-md z-10"
                     ref={sidebarRef}
                 >
-                    <div className="absolute left-4 top-2 ">
+                    <div className="absolute left-4 top-2 cursor-pointer">
                         <Image
                             src={close}
                             alt="close"
