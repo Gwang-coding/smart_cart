@@ -160,7 +160,7 @@ export default function GridPoints({ width = 400, height = 400, gridSize = 10, i
             const encodedSearchTerm = encodeURIComponent(searchTerm.trim());
 
             // 백엔드 API 호출
-            const response = await fetch(`http://localhost:8080/product/search?term=${encodedSearchTerm}`);
+            const response = await fetch(`https://smartcartback-production.up.railway.app/product/search?term=${encodedSearchTerm}`);
 
             if (!response.ok) {
                 throw new Error('검색 결과를 불러오는데 실패했습니다.');
