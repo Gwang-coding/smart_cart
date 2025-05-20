@@ -1,6 +1,6 @@
 // app/payments/complete/page.tsx
 'use client';
-import Link from 'next/link';
+
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 export const dynamic = 'force-dynamic';
