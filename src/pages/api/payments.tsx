@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { orderId, amount, paymentKey } = req.query;
-    const secretKey = process.env.TOSS_SECRET_KEY;
+    const secretKey = process.env.NEXT_PUBLIC_TOSS_SECRET_KEY;
 
     if (!secretKey) {
         return res.status(500).json({ message: 'Secret key is not defined' });
