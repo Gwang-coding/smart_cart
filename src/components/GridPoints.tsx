@@ -49,10 +49,6 @@ export default function GridPoints({ width = 400, height = 400, gridSize = 10, i
             imageRef.current = img;
             setImageLoaded(true);
         };
-        img.onerror = (e) => {
-            console.error('이미지 로드 실패:', imageSrc);
-            setError('지도 이미지를 불러오지 못했습니다. 관리자에게 문의하세요.');
-        };
     }, [imageSrc, width, height]);
 
     // 캔버스 그리기

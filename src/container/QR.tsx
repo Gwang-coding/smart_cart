@@ -119,13 +119,7 @@ function QR() {
                     </div>
 
                     <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-                        <QrReader
-                            onScan={handleScan}
-                            onError={handleError}
-                            width={320}
-                            height={320}
-                            continuousScan={true} // 연속 스캔 활성화
-                        />
+                        <QrReader onScan={handleScan} onError={handleError} width={320} height={320} />
                     </div>
 
                     {isLoading && (

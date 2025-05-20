@@ -9,10 +9,9 @@ interface QrReaderProps {
     width?: number;
     height?: number;
     fps?: number;
-    continuousScan?: boolean;
 }
 
-function QrReader({ onScan, onError, width = 300, height = 300, fps = 10, continuousScan = true }: QrReaderProps) {
+function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrReaderProps) {
     const [isScanning, setIsScanning] = useState(false);
     const [hasCamera, setHasCamera] = useState(true);
     const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
@@ -35,7 +34,6 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10, contin
                     if (lastScannedRef.current !== decodedText) {
                         lastScannedRef.current = decodedText;
                         onScan(decodedText);
-                        stopScanner();
                     }
                 },
                 (errorMessage) => {
@@ -117,7 +115,7 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10, contin
             }
         };
         restart();
-    }, [selectedCameraId]);
+    }, [selectedCameraId, startScanner, startScanner]);
 
     const switchCamera = (cameraId: string) => {
         setSelectedCameraId(cameraId);
