@@ -1,8 +1,9 @@
 // app/payments/complete/page.tsx
 'use client';
-
+import Link from 'next/link';
+import { useCart } from '@/contexts/CartContext';
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 export const dynamic = 'force-dynamic';
 
 interface PaymentData {
@@ -17,7 +18,8 @@ interface PaymentData {
 export default function PaymentSuccess() {
     const searchParams = useSearchParams();
     const orderId = searchParams?.get('orderId');
-    const router = useRouter();
+    const { cartId } = useCart();
+
     const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -92,16 +94,16 @@ export default function PaymentSuccess() {
                     </div>
                 </div>
             )}
-
-            <button
-                onClick={() => {
-                    localStorage.removeItem('shoppingCart');
-                    router.back(); // 이전 페이지로 이동
-                }}
+            <Link
+                href={`/main/${cartId}`}
                 className="block w-full text-center py-3 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                onClick={() => {
+                    // 링크 클릭 시 한 번 더 장바구니 비우기 (이중 안전장치)
+                    localStorage.removeItem('shoppingCart');
+                }}
             >
-                이전 페이지로 돌아가기
-            </button>
+                홈으로 돌아가기
+            </Link>
         </div>
     );
 }
