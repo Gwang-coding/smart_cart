@@ -219,7 +219,7 @@ export default function GridPoints({ width = 400, height = 400, gridSize = 10, i
 
     return (
         <div className="max-w-md mx-auto w-full items-center p-4">
-            <div className="relative mb-6">
+            <div className="relative mb-6 flex justify-center">
                 <canvas ref={canvasRef} width={width} height={height} onClick={handleCanvasClick} className="rounded shadow-md" />
                 {!imageLoaded && (
                     <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded">
