@@ -51,7 +51,7 @@ export default function ShoppingCart() {
             const selectedProducts = products.filter((product) => product.isChecked);
 
             if (selectedProducts.length === 0) {
-                console.error('❌ 결제실패: 선택된 상품이 없습니다.');
+                console.error('❌ 결제 실패: 선택된 상품이 없습니다.');
                 return;
             }
 
