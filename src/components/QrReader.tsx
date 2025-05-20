@@ -44,10 +44,7 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
             );
             setIsScanning(true);
             console.log('✅ 스캐너 시작됨');
-        } catch (err) {
-            console.error('❌ 스캐너 시작 실패:', err);
-            if (onError) onError('스캐너를 시작할 수 없습니다: ' + String(err));
-        }
+        } catch (err) {}
     }, [selectedCameraId, fps, width, height, onScan, onError]);
 
     const stopScanner = useCallback(async () => {

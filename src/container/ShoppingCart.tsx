@@ -36,6 +36,7 @@ export default function ShoppingCart() {
         const secretKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string;
         try {
             const tosspayments = await loadTossPayments(secretKey);
+            console.log('토스페이먼트', tosspayments);
             await tosspayments.requestPayment('카드', {
                 amount: products
                     .filter((product) => product.isChecked) // 체크된 상품만 포함
