@@ -50,7 +50,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
                 localStorage.setItem('sessionToken', data.sessionToken);
                 // 세션 토큰이 포함된 URL로 리다이렉트
                 setTimeout(() => {
-                    router.push(`/main/${cartId}`);
+                    router.push(`/mode-select/${cartId}`);
                 }, 1500);
             }
         });
