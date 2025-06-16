@@ -7,7 +7,7 @@ import { useCart } from '@/contexts/CartContext';
 export default function TopWrapper() {
     const searchParams = useSearchParams();
     const menuText = searchParams?.get('menu') || '장바구니';
-    const { cartId, sessionToken } = useCart();
+    const { cartId } = useCart();
 
     // 조건부 렌더링은 Hooks 호출 이후에 처리
     if (!cartId) {
