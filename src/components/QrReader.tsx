@@ -89,7 +89,6 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
                     if (scannerRef.current) {
                         await scannerRef.current.stop();
                         await scannerRef.current.clear();
-                        console.log('🧹 언마운트 시 스캐너 정리 완료');
                     }
                 } catch (err) {
                     console.warn('⚠️ 언마운트 시 스캐너 정리 실패:', err);
