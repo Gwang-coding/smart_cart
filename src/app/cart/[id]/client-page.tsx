@@ -71,7 +71,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <div className="flex items-center">
+            <div className="flex items-center mb-2">
                 <Image src={camera} alt="menu" width={35} height={35} />
                 <p className="ml-2 text-lg text-black font-bold">QR 코드를 스캔해주세요!</p>
             </div>
