@@ -26,11 +26,9 @@ export default function MainCartPageClient() {
                     router.replace(`/cart/${cartId}`); // QR 코드 페이지로 리다이렉트
                     return;
                 }
-                console.log('세션토큰', sessionToken);
-                console.log('cartid', cartId);
 
                 // 백엔드에 세션 토큰 검증 요청
-                const response = await fetch(`https://smartcartback-production.up.railway.app/carts/${cartId}/validate-session`, {
+                const response = await fetch(`http://localhost:8080/carts/${cartId}/validate-session`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -39,7 +37,6 @@ export default function MainCartPageClient() {
                 });
 
                 const data = await response.json();
-                console.log(data);
 
                 if (!data.valid) {
                     console.error('유효하지 않은 세션입니다. QR 코드를 먼저 스캔해주세요.');
