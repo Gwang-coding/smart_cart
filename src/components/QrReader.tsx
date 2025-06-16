@@ -54,8 +54,7 @@ function QrReader({ onScan, onError, width = 300, height = 300, fps = 10 }: QrRe
                 setIsScanning(false);
                 console.log('✅ 스캐너 중지됨');
             } catch (err) {
-                console.error('❌ 스캐너 중지 실패:', err);
-                if (onError) onError('스캐너를 중지할 수 없습니다: ' + String(err));
+                console.log('❌ 스캐너 중지 실패:', err);
             }
         }
     }, [isScanning, onError]);
