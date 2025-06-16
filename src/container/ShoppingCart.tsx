@@ -120,7 +120,7 @@ export default function ShoppingCart() {
                 }
             });
         }
-    }, [getProduct, isScan, cartId, scanMode]);
+    }, [getProduct, isScan, cartId]);
 
     const handleRemoveProduct = (barcode: string) => {
         setProducts((prevProducts) => prevProducts.filter((p) => p.barcode !== barcode));
