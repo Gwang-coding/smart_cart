@@ -29,7 +29,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
         setIsLoading(false);
 
         // 웹소켓 연결
-        const socket: Socket = io('http://localhost:8080', {
+        const socket: Socket = io('https://smartcartback-production.up.railway.app', {
             query: { cartId },
         });
 
