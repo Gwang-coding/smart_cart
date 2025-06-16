@@ -167,7 +167,6 @@ export default function GridPoints({ width = 400, height = 400, gridSize = 10, i
             }
 
             const data = await response.json();
-            console.log('검색 결과:', data);
             setSearchResults(data);
 
             // 점들을 초기화
@@ -309,7 +308,9 @@ export default function GridPoints({ width = 400, height = 400, gridSize = 10, i
                                                 <p className="text-lg font-semibold">{product.price.toLocaleString()}원</p>
                                                 <p className="text-sm text-gray-500">
                                                     위치:{' '}
-                                                    {product.location_x ? `(${product.location_x}, ${product.location_y})` : '정보 없음'}
+                                                    {product.location_x
+                                                        ? `${product.location_x}번 창구 ${product.location_y}번 칸`
+                                                        : '정보 없음'}
                                                 </p>
                                             </div>
                                         </div>

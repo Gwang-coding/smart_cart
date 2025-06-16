@@ -20,7 +20,6 @@ export default function Top({ text = '장바구니', cartid }: TopProps) {
         // 페이지 경로 생성 (소문자 사용)
         const url = `/main/${cartid}/${componentName.toLowerCase()}?menu=${encodeURIComponent(menuText)}`;
 
-        console.log('Navigating to:', url);
         router.push(url);
     };
 

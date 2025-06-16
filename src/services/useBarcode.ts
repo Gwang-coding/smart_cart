@@ -19,7 +19,6 @@ export const useBarcode = (cartId: string, token?: string | null): { isScan: boo
 
             // 바코드 데이터 수신
             socket.on('barcodeData', (data: { isScan: boolean; getProduct: Product }) => {
-                console.log(`카트 #${cartId} 바코드 데이터 수신:`, data);
                 setBarcodeData(data);
             });
 

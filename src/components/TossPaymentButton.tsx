@@ -28,8 +28,6 @@ export default function TossPaymentButton({ amount, orderName }: TossPaymentButt
                 failUrl: `${window.location.origin}/fail`,
             };
 
-            console.log('결제 요청 데이터:', paymentData);
-
             // 실제 API 요청 대신 결제 페이지로 바로 이동
             // 실제 구현에서는 서버에서 받은 응답의 URL로 이동합니다
             setTimeout(() => {

@@ -24,8 +24,13 @@ export default function ScanModeSelector({ cartId }: ScanModeSelectorProps) {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
-            <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+        <div>
+            <div className="relative flex items-center justify-center p-3 border-solid border-black border-b-2 mb-10">
+                <div className="p-2 text-center flex">
+                    <p className="text-xl font-bold">{cartId}번 카트</p>
+                </div>
+            </div>
+            <div className="flex flex-col items-center justify-center m-10">
                 <h1 className="text-2xl font-bold text-center mb-8 text-gray-800">스캔 모드를 선택하세요</h1>
 
                 <div className="space-y-4">

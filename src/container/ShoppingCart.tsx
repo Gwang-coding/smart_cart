@@ -55,14 +55,11 @@ export default function ShoppingCart() {
         const secretKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string;
 
         if (!secretKey) {
-            console.error('❌ 환경 변수 오류: NEXT_PUBLIC_TOSS_CLIENT_KEY가 설정되지 않음');
+            console.error('❌ 환경 변수 오류: CLIENT_KEY가 설정되지 않음');
             return;
         }
 
         try {
-            console.log('✅ Toss 클라이언트 키:', secretKey);
-            console.log('🛒 장바구니 상품 목록:', products);
-
             const selectedProducts = products.filter((product) => product.isChecked);
 
             if (selectedProducts.length === 0) {
@@ -73,16 +70,7 @@ export default function ShoppingCart() {
             const amount = selectedProducts.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
             const orderName = selectedProducts.map((product) => product.name).join(', ');
 
-            console.log('🧾 주문 정보:', {
-                amount,
-                orderId,
-                orderName,
-                successUrl: `${window.location.origin}/api/payments`,
-                failUrl: `${window.location.origin}/api/payments/fail`,
-            });
-
             const tosspayments = await loadTossPayments(secretKey);
-            console.log('✅ TossPayments 객체 로드 완료:', tosspayments);
 
             await tosspayments.requestPayment('카드', {
                 amount,
@@ -101,8 +89,6 @@ export default function ShoppingCart() {
     // 상품 추가
     useEffect(() => {
         if (!cartId) return;
-        console.log('현재 스캔 모드:', scanMode);
-        console.log('받은 상품 데이터:', getProduct);
 
         if (getProduct) {
             setProducts((prevProducts) => {
