@@ -28,7 +28,7 @@ export default function MainCartPageClient() {
                 }
 
                 // 백엔드에 세션 토큰 검증 요청
-                const response = await fetch(`http://localhost:8080/carts/${cartId}/validate-session`, {
+                const response = await fetch(`https://smartcartback-production.up.railway.app/carts/${cartId}/validate-session`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
