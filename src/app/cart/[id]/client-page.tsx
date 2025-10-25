@@ -29,7 +29,7 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
         setIsLoading(false);
 
         // 웹소켓 연결
-        const socket: Socket = io('https://smartcartback-production.up.railway.app', {
+        const socket: Socket = io('https://smartcartback-production.up.railway.app/', {
             query: { cartId },
         });
 
@@ -79,7 +79,17 @@ export default function QRPageClient({ cartId }: { cartId: string }) {
             <div className="p-4 bg-white rounded-lg shadow-lg">
                 <QRCodeSVG value={qrData.content} size={256} />
             </div>
-
+            <div className="mt-6 text-gray-700">
+                <p className="text-sm">테스트를 위해 Insomnia에서 아래 요청을 보내세요:</p>
+                <pre className="mt-2 p-3 bg-gray-100 rounded text-xs overflow-x-auto">
+                    {`POST https://smartcartback-production.up.railway.app/${cartId}/scan
+    Content-Type: application/json
+    
+    {
+      "token": "${qrData.token}"
+    }`}
+                </pre>
+            </div>
             {scanned && <p className="mt-4 text-green-600 font-bold">스캔 완료! 메인 페이지로 리다이렉트 중...</p>}
         </div>
     );
